@@ -57,15 +57,15 @@ Nota: Se estiver usando um banco de dados diferente, ajuste a DATABASE_URL de ac
 
 
    ```sh
-python manage.py migrate
-   ```
+    python manage.py migrate
+
 
 5. **Crie um Superusuário (opcional, para acesso ao painel de administração do Django):**
 
 
    ```sh
 
-python manage.py createsuperuser
+    python manage.py createsuperuser
    ```
 
 6. **Inicie o Servidor de Desenvolvimento:**
@@ -89,18 +89,17 @@ Abra seu navegador e vá para http://localhost:3000 para o front-end e http://lo
 🤝 Contribuindo
 Se você quiser contribuir para o projeto, siga estas etapas:
 
-1. **Faça um Fork do Repositório.**
+8. **Faça um Fork do Repositório.**
 
-2. **Crie uma Nova Branch:**
+9. **Crie uma Nova Branch:**
 
 
    ```sh
-git checkout -b minha-nova-feature
-   ```
-   
-3. **Faça as Alterações e Testes Necessários.**
+    git checkout -b minha-nova-feature
 
-4. **Envie um Pull Request.**
+10. **Faça as Alterações e Testes Necessários.**
+
+11. **Envie um Pull Request.**
 
 📜 **Licença**
 
