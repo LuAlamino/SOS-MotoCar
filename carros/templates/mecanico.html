@@ -1,135 +1,190 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-  <style>
-    .car-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin: 0 auto;
-      max-width: 1200px;
-      padding: 20px;
+<style>
+    /* Estilos gerais */
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
     }
 
+    /* Estilo para o formulário de busca */
+    .search-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 20px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 30px;
+        margin-right: 10px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        width: 300px;
+        outline: none;
+    }
+
+    .search-form input[type="text"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    }
+
+    .search-form button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .search-form button[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .search-form button[type="submit"]:active {
+        transform: translateY(0);
+    }
+
+    /* Estilo para a grid de mecânicos */
+    .car-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 20px;
+    }
+
+    /* Estilo para cada cartão de mecânico */
     .car-card {
-      background-color: #e3e1e1;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      overflow: hidden;
-      text-align: center;
-      transition: all 0.3s ease;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        height: 350px; /* Altura fixa para o cartão */
     }
 
     .car-card:hover {
         cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        transform: translateY(-2px);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     }
 
     .car-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
     }
 
-    .car-card h3 {
-        font-size: 20px;
-        margin-top: 10px;
-        margin-bottom: 5px;
+    /* Garantir que o conteúdo do cartão se ajuste dentro da altura fixa */
+    .car-info {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100% - 200px); /* Ajuste a altura conforme necessário */
     }
 
     .car-card h2 {
-      font-size: 1.5rem;
-      margin: 10px;
+        font-size: 1.5rem;
+        margin: 10px 0;
+        color: #333;
+        font-weight: 600;
     }
 
     .car-card p {
-      font-size: 1rem;
-      margin-bottom: 10px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        color: #666;
     }
 
-    @media (max-width: 768px) {
-      .car-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        text-align: center;
-        padding: 20px;
-    }
-
-    input[type="text"] {
-        padding: 10px;
-        font-size: 16px;
-        border: 2px solid #e3e1e1;
-        border-radius: 4px;
-        margin-right: 10px;
-        transition: border-bottom-color 0.3s ease-in-out;
-    }
-
-    input[type="text"]:focus {
-        outline: none;
-        border-bottom-color: #e3e1e1;
-    }
-
-    button[type="submit"] {
-        background-color: #0096c7;
+    /* Botão de visualização de detalhes */
+    .car-card .details-btn {
+        background-color: #007bff;
         color: #fff;
         border: none;
         padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 4px;
+        font-size: 14px;
+        border-radius: 20px;
         cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
+        transition: background-color 0.3s ease;
     }
 
-    button[type="submit"]:hover {
-        background-color: #108eb8;
+    .car-card .details-btn:hover {
+        background-color: #0056b3;
     }
 
-    a {
-      font-size: 18px;
-      color: #333;
-      text-decoration: none;
+    /* Mensagem de nenhum resultado */
+    .no-results {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #999;
+        margin-top: 30px;
     }
 
-    a:hover {
-      color: #0096c7;
+    @media (max-width: 768px) {
+        .car-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .search-form input[type="text"] {
+            width: 100%;
+        }
+
+        .search-form button[type="submit"] {
+            font-size: 14px;
+            padding: 10px 20px;
+        }
+
+        .car-card .details-btn {
+            font-size: 12px;
+            padding: 8px 15px;
+        }
     }
-  </style>
+</style>
 
-  <form method="GET" action="{% url 'mecanico_list' %}">
-    <input type="text" name="search" placeholder="Buscar Mecânico...">
-    <button type="submit">Buscar</button>
-  </form>
+<!-- Formulário de busca de mecânicos -->
+<div class="search-form">
+    <form method="GET" action="{% url 'mecanico_list' %}">
+        <input type="text" name="search" placeholder="Buscar Mecânico...">
+        <button type="submit">Buscar</button>
+    </form>
+</div>
 
-  <div class="car-grid">
-    {% if Mecanico %}
-      {% for mecanico in mecanico %}
-
-          <div class="car-card">
-            {% if Mecanico.photo %}
-              <img src="{{ Mecanico.photo.url }}" alt="{{ Mecanico.name }} - {{ Mecanico.cidade }}">
-              <h2>{{ Mecanico.name }}  {{Mecanico.cidade}}</h2>
-              <p>{{ Mecanico.bairro }}</p>
+<!-- Grid de mecânicos -->
+<div class="car-grid">
+    {% if mecanico %}
+        {% for m in mecanico %}
+            <div class="car-card">
+                {% if m.Foto_Estabelecimento %}
+                    <img src="{{ m.Foto_Estabelecimento.url }}" alt="{{ m.name }} - {{ m.cidade }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/400x200.png?text=Imagem+não+disponível" alt="Imagem não disponível">
+                {% endif %}
+                <div class="car-info">
+                    <h2>{{ m.name }} - {{ m.cidade }}</h2>
+                    <p>Bairro: {{ m.bairro }} - Carro Que Trabalha: {{ m.carros_Trabalha }}</p>
+                    <p>Officina: {{ m.name_fantasy }}</p>
+                    <button class="details-btn">Ver Detalhes</button>
+                </div>
             </div>
-            {% endif %}
-
-
-
-
-      {% endfor %}
+        {% endfor %}
     {% else %}
-      <p class="no-results">Nenhum Mecanico encontrado.</p>
+        <p class="no-results">Nenhum Mecânico encontrado.</p>
     {% endif %}
-  </div>
+</div>
 {% endblock %}
-
-
-

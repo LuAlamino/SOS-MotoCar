@@ -18,14 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from carros.views import carros_view
-from Mecanico.views import mecanico_view
+from carros.views import carros_view, new_car_view
+from Mecanico.views import mecanico_view, new_mecanico_view
+from accounts.views import register_view, login_view, logout_view
+
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', login_view, name='login'),
+    path('register/', register_view, name='register'),
+    path('logout/', logout_view, name='logout'),
     path('carros/', carros_view, name='cars_list'),
-    path('mecanico/', mecanico_view, name='mecanico_list')
+    path('mecanico/', mecanico_view, name='mecanico_list'),
+    path('new_car/', new_car_view, name='new_car'),
+    path('new_mecanico/', new_mecanico_view, name='new_mecanico'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

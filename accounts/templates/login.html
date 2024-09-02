@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Estilo para centralizar a div de login */
+    .main-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Centraliza verticalmente */
+        padding: 20px;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, #0096c7, #90e0ef);
+    }
+
+    /* Estilo para a caixa de login */
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.9); /* Fundo branco translúcido */
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Animação de aparecimento suave */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Estilo para o nome da empresa */
+    .company-name {
+        font-size: 2.5rem;
+        color: #0077b6;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Estilos para o formulário de login */
+    form {
+        margin-top: 20px;
+    }
+
+    /* Estilo para cada campo de entrada */
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #0077b6;
+        box-shadow: 0 0 8px rgba(0, 119, 182, 0.2);
+        outline: none;
+    }
+
+    /* Estilo para o botão de login */
+    input[type="submit"] {
+        background-color: #0077b6;
+        color: #fff;
+        border: none;
+        padding: 12px 0;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* Estilo do botão ao passar o mouse */
+    input[type="submit"]:hover {
+        background-color: #005f87;
+        transform: translateY(-2px);
+    }
+
+    /* Estilo do botão ao ser clicado */
+    input[type="submit"]:active {
+        transform: translateY(0);
+    }
+
+    /* Estilo para mensagens de erro */
+    .errorlist {
+        color: #d9534f;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<div class="main-box">
+    <!-- Nome da empresa no topo -->
+    <h1 class="company-name">SOS-MotoCar</h1>
+    <div class="login-container">
+        <!-- Formulário de login -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ login_form.username.errors }}
+                <input type="text" name="username" placeholder="Usuário" required id="id_username">
+            </div>
+            <div class="form-group">
+                {{ login_form.password.errors }}
+                <input type="password" name="password" placeholder="Senha" required id="id_password">
+            </div>
+            <input type="submit" value="Entrar">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
