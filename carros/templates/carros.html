@@ -166,17 +166,21 @@
 <div class="car-grid">
     {% if carros %}
         {% for carros in carros %}
+
             <div class="car-card">
                 {% if carros.photo %}
                     <img src="{{ carros.photo.url }}" alt="{{ carros.model }} - {{ carros.brand }}" />
                 {% else %}
-                    <img alt="Imagem não disponível">
+                    <img src="https://via.placeholder.com/400x200.png?text=Imagem+não+disponível" alt="Imagem não disponível">
                 {% endif %}
                 <h2>{{ carros.brand }} {{ carros.model }}</h2>
                 <p>Fabricação: {{ carros.factory_year }}</p>
                 <p>R$ {{ carros.value }}</p>
+                <a href ="{% url 'car_detail' carros.pk %}">
                 <button class="details-btn">Ver Detalhes</button>
+                </a>
             </div>
+
         {% endfor %}
     {% else %}
         <p class="no-results">Nenhum carro encontrado.</p>

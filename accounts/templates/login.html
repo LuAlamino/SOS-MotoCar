@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
 {% block content %}
 <style>
-    /* Estilo para centralizar a div de login */
     .main-box {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 80vh; /* Centraliza verticalmente */
+        height: calc(100vh - 60px); /* Ajusta altura para não sobrepor base.html */
         padding: 20px;
         box-sizing: border-box;
         background: linear-gradient(135deg, #0096c7, #90e0ef);
+        margin: 0 auto;
+        position: relative;
     }
 
-    /* Estilo para a caixa de login */
     .login-container {
-        background-color: rgba(255, 255, 255, 0.9); /* Fundo branco translúcido */
+        background-color: rgba(255, 255, 255, 0.9);
         padding: 40px;
         border-radius: 12px;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -24,9 +30,9 @@
         max-width: 400px;
         text-align: center;
         animation: fadeIn 1s ease-in-out;
+        position: relative; /* Adiciona posicionamento relativo */
     }
 
-    /* Animação de aparecimento suave */
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -38,23 +44,28 @@
         }
     }
 
-    /* Estilo para o nome da empresa */
-    .company-name {
-        font-size: 2.5rem;
+    .login-company-name {
+        font-size: 1.5rem;
         color: #0077b6;
         margin-bottom: 20px;
         font-weight: bold;
     }
 
-    /* Estilos para o formulário de login */
     form {
         margin-top: 20px;
     }
 
-    /* Estilo para cada campo de entrada */
     .form-group {
         margin-bottom: 15px;
         text-align: left;
+        position: relative; /* Adiciona posicionamento relativo */
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
     }
 
     .form-group input {
@@ -72,7 +83,15 @@
         outline: none;
     }
 
-    /* Estilo para o botão de login */
+    .form-group .eye-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #0077b6;
+    }
+
     input[type="submit"] {
         background-color: #0077b6;
         color: #fff;
@@ -86,44 +105,73 @@
         margin-top: 20px;
     }
 
-    /* Estilo do botão ao passar o mouse */
     input[type="submit"]:hover {
         background-color: #005f87;
         transform: translateY(-2px);
     }
 
-    /* Estilo do botão ao ser clicado */
     input[type="submit"]:active {
         transform: translateY(0);
     }
 
-    /* Estilo para mensagens de erro */
     .errorlist {
         color: #d9534f;
         font-size: 14px;
         margin-bottom: 10px;
     }
 
+    #animation-container {
+        width: 100%;
+        height: 230px; /* Ajuste o tamanho da animação conforme necessário */
+        margin-top: 20px; /* Espaço entre o formulário e a animação */
+    }
 </style>
 
 <div class="main-box">
-    <!-- Nome da empresa no topo -->
-    <h1 class="company-name">SOS-MotoCar</h1>
     <div class="login-container">
-        <!-- Formulário de login -->
+        <h1 class="login-company-name">SOS-MotoCar</h1>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                {{ login_form.username.errors }}
+                {{ form.username.errors }}
+                <label for="id_username">Usuário:</label>
                 <input type="text" name="username" placeholder="Usuário" required id="id_username">
             </div>
+
             <div class="form-group">
-                {{ login_form.password.errors }}
+                {{ form.password.errors }}
+                <label for="id_password">Senha:</label>
                 <input type="password" name="password" placeholder="Senha" required id="id_password">
+                <i class="eye-icon fas fa-eye" id="toggle-password"></i>
             </div>
-            <input type="submit" value="Entrar">
+
+            <div class="form-group">
+                <input type="submit" value="Entrar">
+            </div>
         </form>
     </div>
+
+    <div id="animation-container"></div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.13/lottie.min.js"></script>
+<script>
+    var animationContainer = document.getElementById('animation-container');
+    var animation = lottie.loadAnimation({
+        container: animationContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '{% static "Animation - 1725566234373.json" %}'
+    });
+
+    document.getElementById('toggle-password').addEventListener('click', function() {
+        var passwordField = document.getElementById('id_password');
+        var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
 
 {% endblock %}

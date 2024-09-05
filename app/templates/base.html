@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
         font-family: 'Open Sans', sans-serif;
@@ -17,6 +18,7 @@
         background-color: #0096c7;
         color: #fff;
         text-align: center;
+        border-bottom: 4px solid #ffffff; /* Borda branca na parte inferior do header */
     }
 
     footer {
@@ -33,6 +35,23 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 20px;
+        border-bottom: 4px solid #ffffff; /* Borda branca na parte inferior do nav */
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-left .welcome-text {
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-left .welcome-text i {
+        margin-right: 5px;
     }
 
     nav ul {
@@ -40,6 +59,7 @@
         margin: 0;
         padding: 0;
         display: flex;
+        align-items: center;
     }
 
     nav ul li {
@@ -66,39 +86,49 @@
         background-color: #999;
     }
 
+    .company-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #0077b6;
+    }
+
+    .welcome-text {
+        font-size: 1rem;
+        color: #fff;
+    }
+
+    .welcome-text span {
+        font-weight: bold;
+        color: #fff;
+    }
   </style>
 </head>
 <body>
   <header>
     <nav>
-      <ul>
-
-         {% if user.is_authenticated %}
-          <li>Bem vindo, {{user.username}}</li>
-
-        <li> <a href="{% url 'new_car' %}"> Cadastrar Carros</a></li>
-        <li> <a href="{% url 'new_mecanico' %}"> Cadastrar Mecanico</a></li>
-
-
-        {% endif %}
-
-        {% if not user.is_authenticated %}
-        <li> Seja bem Vindo a SOS-MotoCar</li>
-
-        <li> <a href="{% url 'login' %}"> Entrar</a></li>
-        <li> <a href="{% url 'register' %}"> Cadastrar</a></li>
-        {% endif %}
-
-        <li> <a href="{% url 'cars_list' %}">Carros</a></li>
-        <li> <a href="{% url 'mecanico_list' %}">Mecânicos</a></li>
-
+      <div class="nav-left">
         {% if user.is_authenticated %}
-        <li> <a href="{% url 'logout' %}"> Sair</a></li>
+          <span class="welcome-text">
+            <i class="fas fa-user"></i> Bem-vindo, <span>{{ user.username }}</span>
+          </span>
+        {% else %}
+          <span class="welcome-text">Seja bem-vindo à</span>
         {% endif %}
-
-
-
-
+        <span class="company-name">SOS-MotoCar</span>
+      </div>
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'new_car' %}"><i class="fas fa-car"></i> Cadastrar Carros</a></li>
+          <li><a href="{% url 'new_mecanico' %}"><i class="fas fa-tools"></i> Cadastrar Mecânico</a></li>
+          <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
+          <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
+          <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Entrar</a></li>
+          <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+          <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
+          <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
@@ -109,7 +139,7 @@
   </main>
 
   <footer>
-    <p>&copy; SOS-MotoCar </p>
+    <p>&copy; SOS-MotoCar</p>
   </footer>
 </body>
 </html>

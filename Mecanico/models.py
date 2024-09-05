@@ -1,8 +1,18 @@
 from django.db import models
 from carros.models import  Brand, Cidade
 
+class MecanicoRegistro(models.Model):
+    mecanico_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-# Create your models here.
+    class Meta:
+        ordering = ['-created_at',]
+
+    def __str__(self):
+        return f'{self.mecanico_count}'
+
+
+
 class Mecanico(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)

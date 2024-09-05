@@ -23,3 +23,7 @@ class MecanicoForm(forms.Form):
         )
         mecanico.save()
         return mecanico
+class MecanicoModelForm(forms.ModelForm):
+    class Meta:
+        model = Mecanico
+        fields = '__all__'

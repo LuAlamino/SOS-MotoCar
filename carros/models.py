@@ -18,6 +18,17 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+class CarInventory(models.Model):
+    cars_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    cars_value = models.FloatField(default=0)
+
+    class Meta:
+        ordering = ['-created_at']
+
+
+    def __str__(self):
+        return f'{self.cars_count} - {self.cars_value} '
 
 class Car(models.Model):
     id = models.AutoField(primary_key=True)
@@ -29,6 +40,7 @@ class Car(models.Model):
     Plate = models.CharField(max_length=10, blank=True, null=True)
     photo = models.ImageField(upload_to='carros/Fotos/', blank=True, null=True)
     value = models.FloatField()
+
 
 # definição padrão para nao ficar mostrando car 'object'
     def __str__(self):

@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from carros.views import carros_view, new_car_view
-from Mecanico.views import mecanico_view, new_mecanico_view
+from carros.views import carros_view, new_car_view, CarsView, NewCarView, CarListView, NewCarCreateView, CarDetailView, \
+    CarUpdateView, CarDeleteView
+from Mecanico.views import mecanico_view, new_mecanico_view, MecanicoListView, MecanicoCreateView, MecanicoDetailView, \
+    MecanicoUpdateView, MecanicoDeleteView
 from accounts.views import register_view, login_view, logout_view
 
 
@@ -30,9 +32,15 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout/', logout_view, name='logout'),
-    path('carros/', carros_view, name='cars_list'),
-    path('mecanico/', mecanico_view, name='mecanico_list'),
-    path('new_car/', new_car_view, name='new_car'),
-    path('new_mecanico/', new_mecanico_view, name='new_mecanico'),
+    path('carros/', CarListView.as_view(), name='cars_list'),
+    path('mecanico/', MecanicoListView.as_view(), name='mecanico_list'),
+    path('new_car/', NewCarCreateView.as_view(), name='new_car'),
+    path('carros/<int:pk>/', CarDetailView.as_view(), name='car_detail'),
+    path('carros/<int:pk>/update', CarUpdateView.as_view(), name='car_update'),
+    path('carros/<int:pk>/delete', CarDeleteView.as_view(), name='car_delete'),
+    path('new_mecanico/', MecanicoCreateView.as_view(), name='new_mecanico'),
+    path('mecanico/<int:pk>/', MecanicoDetailView.as_view(), name='mecanico_detail'),
+    path('mecanico/<int:pk>/update', MecanicoUpdateView.as_view(), name='mecanico_update'),
+    path('mecanico/<int:pk>/delete', MecanicoDeleteView.as_view(), name='mecanico_delete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

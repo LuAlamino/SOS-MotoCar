@@ -35,7 +35,7 @@ class CarModelForm(forms.ModelForm):
 # no exemplo eu vou utilizar o campo valor 'value'
     def clean_value(self):
         value = self.cleaned_data.get('value')
-        if value < 20000:
+        if value < 5000:
             self.add_error('value', 'Valor mínimo do carro deve ser de R$5.000')
         return value
 
@@ -44,6 +44,7 @@ class CarModelForm(forms.ModelForm):
         if factory_year < 1500:
             self.add_error('factory_year', 'Não é possivel cadastrar carros fabricados antes de 1500')
         return factory_year
+
 
 #por isso coloco o campo if new_car_form.is_valid(): pois se nao for valido conforme os campos acima
 #ele ira informar os erros

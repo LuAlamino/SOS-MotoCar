@@ -2,19 +2,19 @@
 
 {% block content %}
 <style>
-    /* Estilo para a seção principal */
+    /* Estilo para centralizar a div do formulário */
     .main-box {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 80vh; /* Garantir que a altura mínima seja suficiente */
+        min-height: 80vh; /* Centraliza verticalmente */
         padding: 20px;
         box-sizing: border-box;
         background: linear-gradient(135deg, #0096c7, #90e0ef);
     }
 
-    /* Estilo para a caixa de formulário */
+    /* Estilo para a caixa do formulário */
     .form-container {
         background-color: rgba(255, 255, 255, 0.9); /* Fundo branco translúcido */
         padding: 40px;
@@ -24,7 +24,7 @@
         max-width: 600px;
         text-align: center;
         animation: fadeIn 1s ease-in-out;
-        margin-top: 20px;
+        margin: 0 auto; /* Centraliza horizontalmente */
     }
 
     /* Animação de aparecimento suave */
@@ -39,25 +39,33 @@
         }
     }
 
-    /* Estilo para o formulário */
+    /* Estilo para o cabeçalho do formulário */
+    .form-header {
+        font-size: 2rem;
+        color: #0077b6;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Estilos para o formulário */
     form {
         margin-top: 20px;
     }
 
-    /* Estilo para cada grupo de entrada */
+    /* Estilo para cada campo de entrada */
     .form-group {
         margin-bottom: 15px;
         text-align: left;
     }
 
     .form-group label {
+        font-size: 15px;
+        color: #333;
         display: block;
         margin-bottom: 5px;
-        font-weight: bold;
-        color: #333;
     }
 
-    .form-group input {
+    .form-group input, .form-group select, .form-group textarea {
         width: 100%;
         padding: 12px;
         font-size: 15px;
@@ -66,14 +74,14 @@
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .form-group input:focus {
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
         border-color: #0077b6;
         box-shadow: 0 0 8px rgba(0, 119, 182, 0.2);
         outline: none;
     }
 
     /* Estilo para o botão de envio */
-    input[type="submit"] {
+    button[type="submit"] {
         background-color: #0077b6;
         color: #fff;
         border: none;
@@ -87,18 +95,18 @@
     }
 
     /* Estilo do botão ao passar o mouse */
-    input[type="submit"]:hover {
+    button[type="submit"]:hover {
         background-color: #005f87;
         transform: translateY(-2px);
     }
 
     /* Estilo do botão ao ser clicado */
-    input[type="submit"]:active {
+    button[type="submit"]:active {
         transform: translateY(0);
     }
 
     /* Estilo para mensagens de erro */
-    .errorlist {
+    .text-danger {
         color: #d9534f;
         font-size: 14px;
         margin-bottom: 10px;
@@ -106,41 +114,34 @@
 </style>
 
 <div class="main-box">
+    <!-- Caixa de formulário -->
     <div class="form-container">
-        <h1>Cadastrar Carro</h1>
+        <div class="form-header">
+            <i class="fas fa-car"></i> Cadastro de Carro
+        </div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group">
-                {{ new_car_form.nome.errors }}
-                <label for="id_nome">Nome:</label>
-                <input type="text" name="nome" placeholder="Nome do Carro" required id="id_nome">
+            <div class="row">
+                {% for field in form %}
+                    <div class="col-md-12 mb-3 form-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {% if field.field.widget.input_type == 'checkbox' %}
+                            {{ field }}
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <small id="{{ field.id_for_label }}Help" class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
-
-            <div class="form-group">
-                {{ new_car_form.marca.errors }}
-                <label for="id_marca">Marca:</label>
-                <input type="text" name="marca" placeholder="Marca" required id="id_marca">
-            </div>
-
-            <div class="form-group">
-                {{ new_car_form.ano.errors }}
-                <label for="id_ano">Ano:</label>
-                <input type="text" name="ano" placeholder="Ano" required id="id_ano">
-            </div>
-
-            <div class="form-group">
-                {{ new_car_form.preco.errors }}
-                <label for="id_preco">Preço:</label>
-                <input type="text" name="preco" placeholder="Preço" required id="id_preco">
-            </div>
-
-            <div class="form-group">
-                {{ new_car_form.foto.errors }}
-                <label for="id_foto">Foto:</label>
-                <input type="file" name="foto" required id="id_foto">
-            </div>
-
-            <input type="submit" value="Cadastrar">
+            <button type="submit">
+                <i class="fas fa-save"></i> Cadastrar
+            </button>
         </form>
     </div>
 </div>
