@@ -4,24 +4,32 @@
 from django.db.models.signals import pre_save, post_save, pre_delete, post_delete
 from django.dispatch import receiver
 
-from Mecanico.models import Mecanico
+from Mecanico.models import Mecanico, MecanicoRegistro
 from carros.models import Car
+
+
+def mecanico_inventory_update():
+    mecanico_counts = Mecanico.objects.all().count()
+
+    MecanicoRegistro.objects.create(
+        mecanico_count = mecanico_counts,
+    )
 
 
 @receiver(pre_save, sender=Mecanico)
 def mecanico_pre_save(sender, instance, **kwargs):
-
-    print('### Pré SAVE ###')
+    if not instance.informacoes:
+        instance.informacoes = 'Não Informado'
 
 @receiver(post_save, sender=Mecanico)
 def mecanico_post_save(sender, instance, **kwargs):
-    return ()
+    mecanico_inventory_update()
 
 @receiver(post_delete, sender=Mecanico)
 def mecanico_post_delete(sender, instance, **kwargs):
-    return ()
+    mecanico_inventory_update()
 
 
-@receiver(post_delete, sender=Mecanico)
-def mecanico_post_delete(sender, instance, **kwargs):
-    return ()
+
+
+

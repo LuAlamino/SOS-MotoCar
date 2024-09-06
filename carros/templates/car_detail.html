@@ -86,6 +86,9 @@
     <p><strong>Ano do modelo:</strong> {{ object.model_year }}</p>
     <p><strong>Placa:</strong> {{ object.plate }}</p>
     <p><strong>Preço:</strong> R$ {{ object.value }}</p>
+    {% if object.bio %}
+        <p><strong>Bio:</strong> {{ object.bio }}</p>
+    {% endif %}
 
 
   </div>

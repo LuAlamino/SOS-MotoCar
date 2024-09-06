@@ -87,7 +87,9 @@
     <p><strong>Bairro:</strong> {{ object.bairro }}</p>
 
     <p><strong>Carro que trabalha:</strong>  {{ object.carros_Trabalha }}</p>
-
+    {% if object.informacoes %}
+      <p><strong>Informações:</strong>  {{ object.informacoes }}</p>
+    {% endif %}
   </div>
 
 {% if user.is_authenticated %}

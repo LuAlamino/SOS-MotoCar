@@ -1,7 +1,7 @@
 from django import forms
 from carros.models import Brand, Car
 
-# eu estou usando o forms abaixo o CarModelForm , poiss esse CarForm é um jeito manual de trazer os campos
+# eu estou usando o forms abaixo o CarModelForm , pois esse CarForm é um jeito manual de trazer os campos
 #ja o CarModelForm é a maneira mais clean do django
 class CarForm(forms.Form):
     model = forms.CharField(max_length=100)
@@ -41,8 +41,15 @@ class CarModelForm(forms.ModelForm):
 
     def clean_factory_year(self):
         factory_year = self.cleaned_data.get('factory_year')
+
+        # Verifica se o valor é None
+        if factory_year is None:
+            self.add_error('factory_year', 'O ano de fabricação não pode ser vazio.')
+            return None
+
         if factory_year < 1500:
-            self.add_error('factory_year', 'Não é possivel cadastrar carros fabricados antes de 1500')
+            self.add_error('factory_year', 'Não é possível cadastrar carros fabricados antes de 1500')
+
         return factory_year
 
 

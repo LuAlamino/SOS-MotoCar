@@ -40,6 +40,7 @@ class Car(models.Model):
     Plate = models.CharField(max_length=10, blank=True, null=True)
     photo = models.ImageField(upload_to='carros/Fotos/', blank=True, null=True)
     value = models.FloatField()
+    bio = models.TextField(blank=True, null=True)
 
 
 # definição padrão para nao ficar mostrando car 'object'

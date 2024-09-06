@@ -120,6 +120,5 @@ class CarUpdateView(UpdateView):
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class CarDeleteView(DeleteView):
     model = Car
-    form_class = CarModelForm
     template_name = 'car_delete.html'
-    success_url = '/carros/'
+    success_url = reverse_lazy('cars_list')  # Redireciona para a lista de carros após deletar

@@ -35,6 +35,14 @@
       background-color: #d2221c;
     }
 
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+
     .error-message {
       color: #d9534f;
       font-size: 14px;
@@ -45,17 +53,18 @@
       text-decoration: none !important;
     }
   </style>
+
   <div class="card">
     <div class="card-header">
       <h1 class="card-title">Deletar Carro</h1>
     </div>
     <div class="card-body">
-      <p>Tem certeza que deseja deletar o carro <strong>{{ object.brand }} / {{ object.model }}</strong>?</p>
+      <p>Tem certeza de que deseja deletar o carro <strong>{{ object.brand }} / {{ object.model }}</strong>?</p>
       <form method="post">
         {% csrf_token %}
         <div class="buttons-container">
           <button type="submit" class="btn btn-danger">Deletar Carro</button>
-          <a href="{% url 'car_update' pk=object.pk %}" class="btn btn-secondary">Cancelar</a>
+          <a href="{% url 'cars_list' %}" class="btn btn-secondary">Cancelar</a>
         </div>
       </form>
     </div>

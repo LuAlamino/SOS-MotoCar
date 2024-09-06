@@ -21,6 +21,7 @@ class Mecanico(models.Model):
     bairro = models.CharField(max_length=100, blank=True, null=True)
     carros_Trabalha = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='CarroQue_trabalha', blank=True, null=True)
     Foto_Estabelecimento = models.ImageField(upload_to='Mecanico/Foto_estabelecimento/' ,blank=True, null=True)
+    informacoes = models.TextField(blank=True, null=True)
 
 #Abaixo agora quando aparecer o nome do mecanico, vai aparecer o nome do mecanico normal, caso tire isso
 #vai vir com o nome do mecanico com 'object' junto
