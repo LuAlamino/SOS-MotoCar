@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 from Mecanico.models import Mecanico, MecanicoRegistro
 from carros.models import Car
+from openai_api.client import get_mecanico_ai_bio
 
 
 def mecanico_inventory_update():
@@ -19,7 +20,10 @@ def mecanico_inventory_update():
 @receiver(pre_save, sender=Mecanico)
 def mecanico_pre_save(sender, instance, **kwargs):
     if not instance.informacoes:
-        instance.informacoes = 'Não Informado'
+        ai_informacoes = get_mecanico_ai_bio(
+            instance.name_fantasy, instance.cidade
+        )
+        instance.informacoes = ai_informacoes
 
 @receiver(post_save, sender=Mecanico)
 def mecanico_post_save(sender, instance, **kwargs):

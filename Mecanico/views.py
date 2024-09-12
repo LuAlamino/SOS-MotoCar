@@ -79,6 +79,7 @@ class MecanicoUpdateView(UpdateView):
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class MecanicoDeleteView(DeleteView):
     model = Mecanico
-    form_class = MecanicoModelForm
+
     template_name = 'mecanico_delete.html'
-    success_url = '/mecanico/'
+    success_url = reverse_lazy('mecanico_list')
+
