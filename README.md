@@ -23,7 +23,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 1. **Clone o Repositório:**
 
    ```sh
-   git clone https://github.com/SeuUsuario/SOS-MotoCar.git
+   git clone https://github.com/LuAlamino/SOS-MotoCar.git
    cd SOS-MotoCar
 2. **Instale as Dependências:**
 

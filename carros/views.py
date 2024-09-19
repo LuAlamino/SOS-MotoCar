@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from Mecanico.views import new_mecanico_view
-from carros.models import Car
+from carros.models import Car, CarInventory
 from carros.forms import CarModelForm
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, UpdateView, DeleteView
@@ -122,3 +122,19 @@ class CarDeleteView(DeleteView):
     model = Car
     template_name = 'car_delete.html'
     success_url = reverse_lazy('cars_list')  # Redireciona para a lista de carros após deletar
+
+def car_inventory_report(request):
+    inventory_data = CarInventory.objects.all()
+
+    # Processamento dos dados para os gráficos
+    labels = [inventory.created_at.strftime('%Y-%m-%d') for inventory in inventory_data]
+    cars_count = [inventory.cars_count for inventory in inventory_data]
+    cars_value = [inventory.cars_value for inventory in inventory_data]
+
+    context = {
+        'labels': labels,
+        'cars_count': cars_count,
+        'cars_value': cars_value
+    }
+
+    return render(request, 'car_inventory_report.html', context)

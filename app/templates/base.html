@@ -60,22 +60,28 @@
         padding: 0;
         display: flex;
         align-items: center;
+        height: 50px; /* Garante que a altura do nav e dos itens corresponda */
     }
 
     nav ul li {
         margin: 0 10px;
+        position: relative; /* Garante que o hover fique dentro dos limites */
     }
 
     nav ul li a {
         color: #fff;
         text-decoration: none;
         font-size: 16px;
-        padding: 15px;
+        line-height: 50px; /* Alinha verticalmente o texto dentro do nav */
+        height: 50px; /* Define a altura para coincidir com a altura do nav */
+        display: block; /* Faz o link ocupar toda a área disponível */
+        padding: 0 15px; /* Ajusta o espaçamento horizontal */
         transition: all 0.3s ease;
     }
 
     nav ul li a:hover {
         background-color: #4b8cd6;
+        border-radius: 4px; /* Pequeno arredondamento nas bordas para ficar mais bonito */
     }
 
     nav ul li.active a {
@@ -101,6 +107,7 @@
         font-weight: bold;
         color: #fff;
     }
+
   </style>
 </head>
 <body>
@@ -122,13 +129,17 @@
           <li><a href="{% url 'new_mecanico' %}"><i class="fas fa-tools"></i> Cadastrar Mecânico</a></li>
           <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
           <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
+          <li><a href="{% url 'car_inventory_report' %}"><i class="fas fa-chart-bar"></i> Gráfico</a></li>
           <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+
         {% else %}
           <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Entrar</a></li>
           <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
           <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
           <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
         {% endif %}
+
+
       </ul>
     </nav>
   </header>

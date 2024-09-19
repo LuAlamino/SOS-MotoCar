@@ -27,3 +27,11 @@ class MecanicoModelForm(forms.ModelForm):
     class Meta:
         model = Mecanico
         fields = '__all__'
+        labels = {
+            "name" : "Nome",
+            "name_fantasy" : "Nome Estabelecimento",
+            "bairro" : "Bairro",
+            "carros_Trabalha" : "Carros Trabalha",
+            "cidade" : "Cidade",
+
+        }

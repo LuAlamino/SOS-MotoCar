@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Gráficos de Inventário de Carros
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <h2>Gráficos de Inventário de Carros</h2>
+
+  <!-- Contêiner dos gráficos lado a lado -->
+  <div style="display: flex; justify-content: space-between; gap: 20px;">
+
+    <!-- Gráfico de Contagem de Carros -->
+    <div style="flex: 1; text-align: center;">
+      <h3>Contagem de Carros</h3>
+      <canvas id="carsCountChart" style="width: 100%; height: 350px;"></canvas>
+    </div>
+
+    <!-- Gráfico de Valor Total dos Carros -->
+    <div style="flex: 1; text-align: center;">
+      <h3>Valor Total do Estoque de Carros</h3>
+      <canvas id="carsValueChart" style="width: 100%; height: 350px;"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Dados do gráfico de contagem de carros
+  var carsCountData = {
+    labels: {{ labels | safe }},
+    datasets: [{
+      label: 'Quantidade de Carros',
+      data: {{ cars_count | safe }},
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  var carsCountConfig = {
+    type: 'bar',
+    data: carsCountData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  var carsCountChart = new Chart(
+    document.getElementById('carsCountChart'),
+    carsCountConfig
+  );
+
+  // Dados do gráfico de valor total dos carros
+  var carsValueData = {
+    labels: {{ labels | safe }},
+    datasets: [{
+      label: 'Valor Total dos Carros (R$)',
+      data: {{ cars_value | safe }},
+      backgroundColor: 'rgba(153, 102, 255, 0.2)',
+      borderColor: 'rgba(153, 102, 255, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  var carsValueConfig = {
+    type: 'bar',
+    data: carsValueData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  var carsValueChart = new Chart(
+    document.getElementById('carsValueChart'),
+    carsValueConfig
+  );
+</script>
+{% endblock %}

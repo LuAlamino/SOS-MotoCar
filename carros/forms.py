@@ -1,5 +1,6 @@
 from django import forms
-from carros.models import Brand, Car
+from carros.models import Brand, Car, Cidade
+
 
 # eu estou usando o forms abaixo o CarModelForm , pois esse CarForm é um jeito manual de trazer os campos
 #ja o CarModelForm é a maneira mais clean do django
@@ -27,10 +28,24 @@ class CarForm(forms.Form):
 
 #Uma forma bem mais simples de pega o formulario
 class CarModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CarModelForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Car
         fields = '__all__'
-# 'clean_' é uma função de validação ,
+        labels = {
+            "model": "Modelo",
+            'brand': 'Marca',
+            'factory_year': 'Ano Fabricação',
+            'model_year': 'Ano de Modelo',
+            'Plate': 'Placa',
+            'value': 'Valor',
+            'cidade': 'Cidade',
+        }
+
+
+    # 'clean_' é uma função de validação ,
 # entao posso colocar "clean_" e mais o campo que eu deseja do meu banco de dados
 # no exemplo eu vou utilizar o campo valor 'value'
     def clean_value(self):
@@ -55,3 +70,15 @@ class CarModelForm(forms.ModelForm):
 
 #por isso coloco o campo if new_car_form.is_valid(): pois se nao for valido conforme os campos acima
 #ele ira informar os erros
+
+
+class cidadeModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(cidadeModelForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Cidade
+        fields = '__all__'
+        labels = {
+            "nome": "Cidade",
+        }
