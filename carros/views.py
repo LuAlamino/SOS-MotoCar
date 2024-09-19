@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.shortcuts import render
 
 from Mecanico.views import new_mecanico_view
 from carros.models import Car, CarInventory
@@ -138,3 +139,6 @@ def car_inventory_report(request):
     }
 
     return render(request, 'car_inventory_report.html', context)
+
+def map_view(request):
+    return render(request, 'map.html')

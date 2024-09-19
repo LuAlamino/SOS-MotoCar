@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa com Marcadores</title>
+
+    <!-- Importar o Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Importar o Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        /* Estilo para definir o tamanho do mapa */
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mapa com Marcadores</h1>
+
+    <!-- Div onde o mapa será renderizado -->
+    <div id="map"></div>
+
+    <script>
+        // Verifica se a geolocalização está disponível no navegador
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+
+                // Inicializa o mapa com a localização atual
+                var map = L.map('map').setView([lat, lon], 13);
+
+                // Adiciona as tiles do OpenStreetMap
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Adiciona um marcador na localização atual
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup('Você está aqui!')
+                    .openPopup();
+
+                // Marcadores adicionais
+                var pontos = [
+                    { coords: [-23.4800, -47.4000], descricao: 'Carlos Car' }, // Carlos Car
+                    { coords: [-23.4500, -47.4520], descricao: 'Dogao Funilaria' }, // Dogao Funilaria
+                    { coords: [-23.5015, -47.4526], descricao: 'StretCar' } // StretCar
+                ];
+
+                // Adiciona marcadores para cada ponto
+                pontos.forEach(function(ponto) {
+                    L.marker(ponto.coords).addTo(map)
+                        .bindPopup(ponto.descricao);
+                });
+            }, function(error) {
+                alert('Erro ao obter localização: ' + error.message);
+            });
+        } else {
+            alert("Geolocalização não está disponível neste navegador.");
+        }
+    </script>
+</body>
+</html>
+
+
+{% endblock %}

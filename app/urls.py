@@ -23,6 +23,7 @@ from carros.views import carros_view, new_car_view, CarsView, NewCarView, CarLis
 from Mecanico.views import mecanico_view, new_mecanico_view, MecanicoListView, MecanicoCreateView, MecanicoDetailView, \
     MecanicoUpdateView, MecanicoDeleteView
 from accounts.views import register_view, login_view, logout_view
+from carros.views import map_view
 
 
 
@@ -43,5 +44,6 @@ urlpatterns = [
     path('mecanico/<int:pk>/update', MecanicoUpdateView.as_view(), name='mecanico_update'),
     path('mecanico/<int:pk>/delete', MecanicoDeleteView.as_view(), name='mecanico_delete'),
     path('car-inventory-report/', car_inventory_report, name='car_inventory_report'),
+    path('mapa/', map_view, name='map_view'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -130,6 +130,7 @@
           <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
           <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
           <li><a href="{% url 'car_inventory_report' %}"><i class="fas fa-chart-bar"></i> Gráfico</a></li>
+          <li><a href="{% url 'map_view' %}"><i class="fas fa-map-marked-alt"></i> Ver Mapa</a></li>
           <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
 
         {% else %}
@@ -138,8 +139,6 @@
           <li><a href="{% url 'cars_list' %}"><i class="fas fa-list"></i> Carros</a></li>
           <li><a href="{% url 'mecanico_list' %}"><i class="fas fa-users"></i> Mecânicos</a></li>
         {% endif %}
-
-
       </ul>
     </nav>
   </header>
