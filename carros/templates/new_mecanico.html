@@ -8,7 +8,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        min-height: 80vh; /* Centraliza verticalmente */
+        min-height: 80vh;
         padding: 20px;
         box-sizing: border-box;
         background: linear-gradient(135deg, #0096c7, #90e0ef);
@@ -111,6 +111,17 @@
         font-size: 14px;
         margin-bottom: 10px;
     }
+
+    /* Estilo para alinhar as checkboxes e os labels */
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin-right: 10px;
+    }
 </style>
 
 <div class="main-box">
@@ -121,12 +132,19 @@
         </div>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.media }} <!-- Importante para incluir o JavaScript necessário para o popup de adição -->
             <div class="row">
                 {% for field in form %}
                     <div class="col-md-12 mb-3 form-group">
                         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        {% if field.field.widget.input_type == 'checkbox' %}
-                            {{ field }}
+                        {% if field.widget.input_type == "checkbox_select_multiple" %}
+                            <div class="checkbox-group">
+                                {% for checkbox in field %}
+                                    <div style="display: flex; align-items: center;">
+                                        {{ checkbox.tag }} <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         {% else %}
                             {{ field }}
                         {% endif %}

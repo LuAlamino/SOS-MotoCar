@@ -76,18 +76,20 @@ admin.site.register(Brand, BrandAdmin)
 @admin.register(Mecanico)
 class MecanicoAdmin(admin.ModelAdmin):
     form = MecanicoModelForm
-    list_display = ['name', 'cidade', 'bairro', 'get_estabelecimento_display', 'carros_Trabalha',]
+    list_display = ['name', 'cidade', 'bairro', 'get_estabelecimento_display', 'get_carros_trabalha_display']
     search_fields = (
         'name',
         'name_fantasy',
-        'cidade__nome' ,
+        'cidade__nome',
         'bairro'
     )
-
     autocomplete_fields = ('carros_Trabalha', 'cidade')
 
     def get_estabelecimento_display(self, obj):
         return obj.name_fantasy
-
     get_estabelecimento_display.short_description = 'Estabelecimento'
+
+    def get_carros_trabalha_display(self, obj):
+        return ", ".join([car.name for car in obj.carros_Trabalha.all()])
+    get_carros_trabalha_display.short_description = 'Carros que trabalha'
 

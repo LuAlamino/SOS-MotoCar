@@ -79,24 +79,32 @@
       text-decoration: none !important;
     }
   </style>
+
   <div class="car-card">
-      <img src="{{ object.Foto_Estabelecimento.url }}" alt="{{ object.name }} - {{ object.cidade }}">
+    <img src="{{ object.Foto_Estabelecimento.url }}" alt="{{ object.name }} - {{ object.cidade }}">
 
     <p><strong>Estabelecimento:</strong> {{ object.name_fantasy }}</p>
     <p><strong>Cidade:</strong> {{ object.cidade }}</p>
     <p><strong>Bairro:</strong> {{ object.bairro }}</p>
 
-    <p><strong>Carro que trabalha:</strong>  {{ object.carros_Trabalha }}</p>
+    <p><strong>Carros que trabalha:</strong>
+      {% for carro in object.carros_Trabalha.all %}
+        {{ carro.name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        Nenhum carro cadastrado.
+      {% endfor %}
+    </p>
+
     {% if object.informacoes %}
       <p><strong>Informações:</strong>  {{ object.informacoes }}</p>
     {% endif %}
   </div>
 
-{% if user.is_authenticated %}
-<div class="buttons-container">
-    <a href="{% url 'mecanico_update' pk=object.pk %}" class="btn btn-primary">Editar</a>
-    <a href="{% url 'mecanico_delete' pk=object.pk %}" class="btn btn-danger">Deletar</a>
-</div>
-{% endif %}
+  {% if user.is_authenticated %}
+    <div class="buttons-container">
+      <a href="{% url 'mecanico_update' pk=object.pk %}" class="btn btn-primary">Editar</a>
+      <a href="{% url 'mecanico_delete' pk=object.pk %}" class="btn btn-danger">Deletar</a>
+    </div>
+  {% endif %}
 
 {% endblock %}

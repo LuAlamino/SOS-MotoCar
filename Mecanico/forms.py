@@ -35,3 +35,7 @@ class MecanicoModelForm(forms.ModelForm):
             "cidade" : "Cidade",
 
         }
+
+        widgets = {
+            'carros_Trabalha': forms.CheckboxSelectMultiple(),  # Força a exibição como checkboxes múltiplos
+        }

@@ -26,7 +26,7 @@ class CarForm(forms.Form):
         car.save()
         return car
 
-#Uma forma bem mais simples de pega o formulario
+#Uma forma bem mais simples de pegar o formulario
 class CarModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CarModelForm, self).__init__(*args, **kwargs)
