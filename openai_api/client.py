@@ -1,4 +1,4 @@
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+'''from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 def get_mecanico_ai_bio(name_fantasy, cidade):
     tokenizer = GPT2Tokenizer.from_pretrained('pierreguillou/gpt2-small-portuguese')
@@ -52,4 +52,4 @@ def get_car_ai_bio(model_name, brand, year):
     start_idx = len(prompt)
     return result[start_idx:].strip()[:250]
 
-
+'''

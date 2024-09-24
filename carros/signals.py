@@ -4,7 +4,7 @@
 from django.db.models.signals import pre_save, post_save, pre_delete, post_delete
 from django.dispatch import receiver
 from django.db.models import Sum
-from openai_api.client import get_car_ai_bio
+
 from django.core.exceptions import ValidationError
 from carros.models import Car, CarInventory
 

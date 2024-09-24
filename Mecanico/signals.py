@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from Mecanico.models import Mecanico, MecanicoRegistro
 from django.core.exceptions import ValidationError
 from carros.models import Car
-from openai_api.client import get_mecanico_ai_bio
+
 
 
 def mecanico_inventory_update():
