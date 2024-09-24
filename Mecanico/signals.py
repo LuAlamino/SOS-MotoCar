@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save, post_save, pre_delete, post_delet
 from django.dispatch import receiver
 
 from Mecanico.models import Mecanico, MecanicoRegistro
+from django.core.exceptions import ValidationError
 from carros.models import Car
 from openai_api.client import get_mecanico_ai_bio
 
@@ -20,10 +21,15 @@ def mecanico_inventory_update():
 @receiver(pre_save, sender=Mecanico)
 def mecanico_pre_save(sender, instance, **kwargs):
     if not instance.informacoes:
-        ai_informacoes = get_mecanico_ai_bio(
+        instance.informacoes = 'A bio não foi informada.'
+
+
+
+        '''ai_informacoes = get_mecanico_ai_bio(
             instance.name_fantasy, instance.cidade
         )
         instance.informacoes = ai_informacoes
+        '''
 
 @receiver(post_save, sender=Mecanico)
 def mecanico_post_save(sender, instance, **kwargs):
