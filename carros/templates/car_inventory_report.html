@@ -1,34 +1,37 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Gráficos de Inventário de Carros
+Gráficos de Inventário de Carros e Mecânicos
 {% endblock %}
 
 {% block content %}
 <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-  <h2>Gráficos de Inventário de Carros</h2>
+  <h2>Gráficos de Inventário de Carros e Mecânicos</h2>
 
-  <!-- Contêiner dos gráficos lado a lado -->
-  <div style="display: flex; justify-content: space-between; gap: 20px;">
-
-    <!-- Gráfico de Contagem de Carros -->
+  <!-- Contêiner dos gráficos -->
+  <div style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
     <div style="flex: 1; text-align: center;">
       <h3>Contagem de Carros</h3>
       <canvas id="carsCountChart" style="width: 100%; height: 350px;"></canvas>
     </div>
 
-    <!-- Gráfico de Valor Total dos Carros -->
     <div style="flex: 1; text-align: center;">
       <h3>Valor Total do Estoque de Carros</h3>
       <canvas id="carsValueChart" style="width: 100%; height: 350px;"></canvas>
     </div>
 
+    <div style="flex: 1; text-align: center;">
+      <h3>Contagem de Mecânicos</h3>
+      <canvas id="mecanicoCountChart" style="width: 100%; height: 350px;"></canvas>
+    </div>
   </div>
 </div>
 
+<!-- Importação da biblioteca Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  // Dados do gráfico de contagem de carros
+  // Se os dados forem carregados corretamente, os gráficos devem funcionar.
   var carsCountData = {
     labels: {{ labels | safe }},
     datasets: [{
@@ -40,24 +43,21 @@ Gráficos de Inventário de Carros
     }]
   };
 
-  var carsCountConfig = {
-    type: 'bar',
-    data: carsCountData,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  var carsCountChart = new Chart(
+    document.getElementById('carsCountChart'),
+    {
+      type: 'bar',
+      data: carsCountData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         }
       }
     }
-  };
-
-  var carsCountChart = new Chart(
-    document.getElementById('carsCountChart'),
-    carsCountConfig
   );
 
-  // Dados do gráfico de valor total dos carros
   var carsValueData = {
     labels: {{ labels | safe }},
     datasets: [{
@@ -69,21 +69,46 @@ Gráficos de Inventário de Carros
     }]
   };
 
-  var carsValueConfig = {
-    type: 'bar',
-    data: carsValueData,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  var carsValueChart = new Chart(
+    document.getElementById('carsValueChart'),
+    {
+      type: 'bar',
+      data: carsValueData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         }
       }
     }
+  );
+
+  // Novo gráfico para contar mecânicos
+  var mecanicoCountData = {
+    labels: {{ labels | safe }},
+    datasets: [{
+      label: 'Quantidade de Mecânicos',
+      data: {{ mecanico_count | safe }},
+      backgroundColor: 'rgba(255, 159, 64, 0.2)',
+      borderColor: 'rgba(255, 159, 64, 1)',
+      borderWidth: 1
+    }]
   };
 
-  var carsValueChart = new Chart(
-    document.getElementById('carsValueChart'),
-    carsValueConfig
+  var mecanicoCountChart = new Chart(
+    document.getElementById('mecanicoCountChart'),
+    {
+      type: 'bar',
+      data: mecanicoCountData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
   );
 </script>
 {% endblock %}

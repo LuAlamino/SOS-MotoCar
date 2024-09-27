@@ -3,8 +3,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render
+from Mecanico.signals import mecanico_inventory_update
 
-from Mecanico.views import new_mecanico_view
+from Mecanico.models import *
 from carros.models import Car, CarInventory
 from carros.forms import CarModelForm
 from django.views import View
@@ -126,16 +127,20 @@ class CarDeleteView(DeleteView):
 
 def car_inventory_report(request):
     inventory_data = CarInventory.objects.all()
+    registro_data = MecanicoRegistro.objects.all()
+
 
     # Processamento dos dados para os gráficos
     labels = [inventory.created_at.strftime('%Y-%m-%d') for inventory in inventory_data]
     cars_count = [inventory.cars_count for inventory in inventory_data]
     cars_value = [inventory.cars_value for inventory in inventory_data]
+    mecanico_count = [registro.mecanico_count for registro in registro_data]
 
     context = {
         'labels': labels,
         'cars_count': cars_count,
-        'cars_value': cars_value
+        'cars_value': cars_value,
+        'mecanico_count': mecanico_count,
     }
 
     return render(request, 'car_inventory_report.html', context)
