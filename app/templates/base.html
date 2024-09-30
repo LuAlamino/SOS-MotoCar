@@ -33,6 +33,7 @@
         color: #fff;
         height: 50px;
         display: flex;
+        flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte se não houver espaço */
         justify-content: space-between;
         align-items: center;
         padding: 0 20px;
@@ -61,6 +62,7 @@
         display: flex;
         align-items: center;
         height: 50px; /* Garante que a altura do nav e dos itens corresponda */
+        flex-wrap: wrap; /* Permite que os itens da lista se movam para a linha seguinte */
     }
 
     nav ul li {
@@ -108,6 +110,27 @@
         color: #fff;
     }
 
+    /* Media Queries para Responsividade */
+    @media (max-width: 600px) {
+        nav {
+            flex-direction: column; /* Muda a direção para coluna em telas pequenas */
+            align-items: flex-start; /* Alinha itens à esquerda */
+        }
+
+        nav ul {
+            flex-direction: column; /* Alinha os links em coluna */
+            width: 100%; /* Ocupa toda a largura disponível */
+        }
+
+        nav ul li {
+            margin: 5px 0; /* Espaçamento vertical entre os itens */
+            width: 100%; /* Cada item ocupa toda a largura */
+        }
+
+        nav ul li a {
+            text-align: center; /* Centraliza o texto em telas pequenas */
+        }
+    }
   </style>
 </head>
 <body>
